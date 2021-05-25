@@ -26,17 +26,7 @@ steps:
       command: test
       projects: "**/*Test/*.csproj"
       arguments: "--configuration $(buildConfiguration)"
- - task: DotNetCoreCLI@2
-       displayName: 'dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    inputs:
-      command: publish
-      publishWebProjects: false
-      projects: 'src/SimpleAPI/SimpleAPI.csproj'
-      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-      zipAfterPublish: true
 
-- task: PublishBuildArtifacts@1
-      displayName: 'publish artifacts'
   - task: VSBuild@1
     inputs:
       solution: "$(solution)"
@@ -49,4 +39,15 @@ steps:
       platform: "$(buildPlatform)"
       configuration: "$(buildConfiguration)"
 
+  - task: DotNetCoreCLI@2
+       displayName: 'dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: 'src/SimpleAPI/SimpleAPI.csproj'
+      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+      zipAfterPublish: true
+
+ - task: PublishBuildArtifacts@1
+      displayName: 'publish artifacts'
  
